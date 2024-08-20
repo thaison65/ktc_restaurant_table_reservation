@@ -1,0 +1,314 @@
+:root {
+    background-image: linear-gradient(white, #737373);
+}
+
+body {
+    margin: 0;
+}
+
+
+.header-home {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.header-home ul {
+    display: flex;
+    list-style-type: none;
+}
+
+.header-home ul li {
+    margin-right: 60px;
+}
+
+.header-home ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.header-home-p {
+    margin-right: 20px;
+    font-size: 32px;
+    font-family: "Rochester", cursive;
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+.container_icon_user {
+    height: 25px;
+    width: 25px;
+    border-radius: 24px;
+    padding: 0px;
+    display: flex;
+    border: 1px solid black;
+}
+
+.gr-nav-home {
+    display: flex;
+    align-items: center;
+}
+
+.mySwiper {
+    display: flex;
+
+}
+
+.img_swiper {
+    width: 100%;
+    height: 327px;
+    object-fit: cover;
+}
+
+.container_div_home_welcome {
+    display: flex;
+    justify-content: center;
+    margin-top: 16px;
+
+}
+
+.container_home_welcome {
+    background-color: white;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: "Rochester", cursive;
+    font-weight: 400;
+
+}
+
+.text_welcome {
+    font-size: 32px;
+    margin: 0;
+    font-weight: 500;
+}
+
+.text_description_welcome {
+    font-size: 24px;
+    padding: 0 20px 0 40px;
+}
+
+.container_description_img_view {
+    margin: 100px 12px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+
+}
+
+.container_description_view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: linear-gradient(to right, rgb(121, 121, 121), #737373);
+    opacity: 0.8;
+    max-width: 500px;
+    padding: 0 20px 0 20px;
+    height: 230px;
+    position: relative;
+    left: 80px;
+}
+
+.container_image_view {
+    display: flex;
+    height: 274px;
+    /*   width: 400px; */
+}
+
+.text_name_view {
+    font-size: 32px;
+    margin: 0;
+    font-family: "Rochester", cursive;
+    font-weight: 400;
+    color: white;
+}
+
+.text_description_view {
+    font-size: 24px;
+    text-align: center;
+    color: white;
+    font-family: "Rochester", cursive;
+    font-weight: 400;
+}
+
+.button_booking {
+    width: 150px;
+    height: 90px;
+    border-radius: 2;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.container_description_img_view_left {
+    margin: 100px 0px 0px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+
+}
+
+.container_description_view_left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: linear-gradient(to right, rgb(121, 121, 121), #737373);
+    opacity: 0.8;
+    max-width: 500px;
+    padding: 0 20px 0 20px;
+    height: 230px;
+    position: relative;
+    right: 80px;
+}
+
+.container_image_view_left {
+    display: flex;
+    height: 274px;
+}
+
+.text_name_view_left {
+    font-size: 32px;
+    margin: 0;
+    font-family: "Rochester", cursive;
+    font-weight: 400;
+    color: white;
+}
+
+.text_description_view_left {
+    font-size: 24px;
+    text-align: center;
+    color: white;
+    font-family: "Rochester", cursive;
+    font-weight: 400;
+}
+
+.button_booking_left {
+    width: 150px;
+    height: 90px;
+    border-radius: 2;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.footer_home {
+    padding: 20px 0 20px 0;
+    display: flex;
+    justify-content: space-around;
+    background-color: white;
+    margin-top: 32px;
+
+}
+
+.container_footer_social_media {
+    align-items: end;
+    display: flex;
+}
+
+.img_icon_social_media {
+    height: 50px;
+    margin-right: 20px;
+}
+
+.text_email,
+.text_phone_number {
+    font-size: 24px;
+    font-weight: 500;
+    margin: 0;
+}
+
+.text_address {
+    font-size: 28px;
+    font-weight: 600;
+    margin: 10px;
+}
+
+.card_view_welcome_transition-enter {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  
+  .card_view_welcome_transition-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 4000ms, transform 4000ms;
+  }
+  
+  .card_view_right_transition-enter {
+    opacity: 0;
+    transform: translateX(100px); /*hướng di chuyển phải - trái*/
+  }
+  
+  .card_view_right_transition-enter-active {
+    opacity: 1;
+    transform: translateX(0); /* Đặt lại vị trí ban đầu*/
+    transition: opacity 4000ms, transform 4000ms; /* Thời gian chuyển tiếp*/
+  }
+  
+  .card_view_left_transition-enter{
+    opacity: 0;
+    transform: translateX(-100px); /*hướng di chuyển trais - phải*/
+  }
+
+  .card_view_left_transition-enter-active{
+    opacity: 1;
+    transform: translateX(0); /* Đặt lại vị trí ban đầu*/
+    transition: opacity 4000ms, transform 4000ms; /* Thời gian chuyển tiếp*/
+  }
+
+@media only screen and (max-width: 900px) {
+    .container_description_img_view {
+        margin: 100px 0px 0px 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+    }
+
+    .img_card_view_right {
+        width: 640px;
+    }
+
+    .container_description_view {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-image: linear-gradient(to right, rgb(121, 121, 121), #737373);
+        opacity: 0.8;
+        max-width: 500px;
+        padding: 0 20px 0 20px;
+        height: 230px;
+        left: 0;
+        top: 50px;
+    }
+
+    .container_description_img_view_left {
+        margin: 100px 0px 0px 24px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: start;
+    }
+    .img_card_view_left{
+        width: 640px;
+    }
+    .container_description_view_left {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-image: linear-gradient(to right, rgb(121, 121, 121), #737373);
+        opacity: 0.8;
+        max-width: 500px;
+        padding: 0 20px 0 20px;
+        height: 230px;
+        position: relative;
+        right: 0;
+        bottom: 50px;
+    }
+    
+}

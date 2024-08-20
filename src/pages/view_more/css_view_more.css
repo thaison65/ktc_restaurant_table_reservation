@@ -1,0 +1,453 @@
+:root {
+    background-image: linear-gradient(white, #737373);
+}
+
+body {
+    margin: 0;
+}
+
+.swiper{
+    z-index: 0;
+}
+
+.header-home {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.header-home ul {
+    display: flex;
+    list-style-type: none;
+}
+
+.header-home ul li {
+    margin-right: 60px;
+}
+
+.header-home ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.header-home-p {
+    margin-right: 20px;
+    font-size: 32px;
+    font-family: "Rochester", cursive;
+    font-weight: 400;
+    font-style: normal;
+
+}
+
+.container_icon_user {
+    height: 25px;
+    width: 25px;
+    border-radius: 24px;
+    padding: 0px;
+    display: flex;
+    border: 1px solid black;
+}
+
+.gr-nav-home {
+    display: flex;
+    align-items: center;
+}
+
+.mySwiper {
+    display: flex;
+   
+}
+.mySwiper_view {
+  display: flex;
+  max-width: 700px;
+  max-height: 600px;
+}
+.swiper-pagination{
+  display: none;
+}
+
+.img_swiper {
+    width: 100%;
+    height: 327px;
+    object-fit: cover;
+}
+
+.container_content_description_view{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title_content_view{
+    font-size: 44px;
+    margin: 20px 0 20px 0 ;
+    font-family: "Rochester", cursive;
+    font-weight: 600;
+    font-style: normal;
+    color: white;
+}
+
+
+.description_content_view{
+    font-size: 20px;
+    margin: 8px 0 8px 0 ;
+    font-family: "Rochester", cursive;
+    font-weight: 300;
+    text-align: center;
+    font-style: normal;
+    color: white;
+}
+
+.container_description_content_view {
+    width: 600px; 
+    overflow: hidden; /* Ẩn phần văn bản vượt quá chiều rộng */
+    white-space: pre-wrap; /* Cho phép xuống dòng tự động */
+  }
+  
+  .description_content_view {
+    display: inline-block;
+    overflow: hidden;
+    white-space: pre-wrap;
+    position: relative;
+    font-size: 24px;
+    margin: 8px 0 8px 0 ;
+    font-family: "Rochester", cursive;
+    font-weight: 300;
+    text-align: center;
+    font-style: normal;
+    color: white;
+  }
+  
+.text_for_require{
+    margin: 8px 0 8px 0 ;
+    font-size: 24px;
+    font-family: "Rochester", cursive;
+    font-weight: 300;
+    text-align: center;
+    font-style: normal;
+    color: white;
+}
+
+.text_email{
+    font-size: 24px;
+    font-family: "Rochester", cursive;
+    font-weight: 300;
+    text-align: center;
+    font-style: normal;
+    color: white;
+}
+.container_image_view{
+  max-width: 900px;
+  height: 500px;
+}
+.image_view{
+   width: 100%;
+   border-radius: 4px;
+}
+
+.container_btn_ic{
+    margin: 20px 0 20px 0;
+    padding: 8px;
+    display: flex;   
+    justify-content: center;
+    max-width: 150px;
+    background-color: black;
+}
+
+.button_booking_view_more {
+    border: none;
+    background-color: transparent;
+    color: black;
+    font-size: 24px;
+    font-weight: 700;
+    font-family: "Rochester", cursive;
+    width: 200px;
+}
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .dialog {
+    display: flex;
+    position: fixed;
+    z-index: 100000;
+    align-items: center;
+    flex-direction: column;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 900px;
+    height: 700px;
+    max-width: 90%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dialog h2 {
+    margin-top: 0;
+  }
+  
+  .dialog-content {
+    margin-bottom: 20px;
+    font-family: "Rochester", cursive;
+    font-weight: 300;
+    font-size: 24px;
+    text-align: center;
+  }
+  
+  .dialog button {
+    background: transparent;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+
+  .dialog button:hover {
+    opacity: 0.7;
+  }
+
+  .react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name{
+    width: 100px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+  .dialog .button_next_reservation{
+    color: white;
+    background-color: black;
+    margin-top: 20px;
+    width: 200px;
+  }
+.dialog_view_image{
+  object-fit: fill;
+  width: 100%;
+  height: 550px;
+}
+
+.container_content_dialog_view{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  max-height: 600px;
+}
+
+.ic_transition_arr_swiper{
+  height: 50px;
+  width: 50px;
+  color: black  ;
+}
+
+.button_transition_swiper:hover{
+  background-color: #eeecec;
+  border-radius: 40px;
+}
+
+.draf_container{
+  height: 80px;
+  width: 80px;
+  background-color: transparent;
+}
+
+.container_form_customer{
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.dialog_fill_information{
+  display: flex;
+  position: fixed;
+  z-index: 100000;
+  align-items: center;
+  flex-direction: column;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 900px;
+  height: 700px;
+  max-width: 90%;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ============ */
+.dialog_fill_information h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: #333;
+  text-align: center;
+}
+
+.form_group {
+  margin-bottom: 20px;
+}
+
+.form_group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #555;
+}
+
+.form_group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  color: #333;
+  transition: border-color 0.3s;
+}
+
+.form_group input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+ .button_next_reservation{
+    color: white;
+    background-color: black;
+    margin-top: 20px;
+    width: 200px;
+    height: 40px;
+  }
+
+  .container_gr_email_phone{
+    display: flex;
+    width: 100%;
+
+  }
+  #myFrom{
+    display: flex;
+    flex-direction: column;
+    margin-top: 4px;
+
+  }
+
+  .form_group{
+    margin: 0 20px 20px 20px;
+  }
+
+  .container_button{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .container_note{
+    width: 100%;
+    margin-top: 12px;
+display: flex;
+    align-items: center;
+  flex-direction: column;
+  }
+
+  .container_note p{
+    font-size: 24px;
+    margin: 20px;
+    text-align: center;
+    font-family: "Rochester", cursive;
+  }
+
+/* ===================================== */
+
+.container_btn_ic{
+
+  background-color: #fff;
+  padding: 0.8em 1.5em;
+  border-radius: 20em;
+  border: none;
+  user-select: none;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 100ms linear;
+ color: black;
+  position: relative;
+  box-shadow: inset 0 4px 6px -1px rgb(0 0 0 / 0.1), 
+  0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+.container_btn_ic:active {
+  box-shadow: inset 0 0 0 4px #043b3f6b;
+}
+
+.container_btn_ic::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  position: absolute;
+  border-radius: inherit;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  transition: all 500ms ease-in-out;
+  opacity: 0;
+  animation: flash 100ms ease-in-out;
+  transform: scaleX(2) scaleY(2);
+}
+
+.container_btn_ic:hover::before {
+  opacity: 1;
+  transform: scaleX(1) scaleY(1);
+}
+
+.swal-text{
+  text-align: center;
+}
+
+@keyframes flash {
+  0%{
+      opacity: 1;
+      transform: translate(45px);
+  }
+  100%{
+      opacity: 0;
+      transform: translate(0);
+  }
+}
+
+/*  */
+@media only screen and (max-width: 800px) {
+  .container_image_view{
+    min-width: 600px;
+  }
+  .description_content_view{
+    width: 100%;
+    display: flex;
+  }
+
+  
+  .react-datepicker__day-name, .react-datepicker__day, .react-datepicker__time-name{
+    width:60px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+
+}

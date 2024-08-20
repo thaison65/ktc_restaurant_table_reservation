@@ -1,11 +1,14 @@
-import './App.css';
-import HomePage from './pages/HomePage/HomePage';
-
+import {  BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import HomePage from './pages/home_page'
+import ViewMorePage from "./pages/view_more_page";
 function App() {
   return (
-  <HomePage>
-  </HomePage>
-  
+    <Router>
+      <Routes>
+        <Route path='/KTC_FE_MINI_PROJECT_USERPAGE' element={<HomePage/>}/>
+          <Route path="/viewMorePage" element={<ViewMorePage/>}/>
+        </Routes>
+    </Router>
   );
 }
 

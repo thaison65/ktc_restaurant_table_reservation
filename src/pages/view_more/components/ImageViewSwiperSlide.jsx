@@ -4,16 +4,16 @@ import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
-
-export default function ImageViewSwiper({id}) {
-  const [dataView, setDataView] = useState([]);
-
+import { API_URL } from "../../../assets/config/config_url";
+export default function ImageViewSwiper({ id }) {
+  const [dataView, setDataView] = useState([{}]);
   useEffect(() => {
     const getView = async () => {
-      const url = `https://3806-58-187-122-34.ngrok-free.app/category/getViews/2`;
+      const url = `${API_URL}category/getViews/${id}`;
+      console.log(url);
       try {
         const res = await fetch(url, {
-          method: "GET",  
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
             "ngrok-skip-browser-warning": true,
@@ -24,13 +24,12 @@ export default function ImageViewSwiper({id}) {
         }
         const json = await res.json();
         setDataView(json.data);
-        console.log(dataView)
       } catch (error) {
         console.error(error.message);
       }
     };
     getView();
-  }, [id]);  
+  }, [id]);
   return (
     <>
       <Swiper
@@ -41,23 +40,22 @@ export default function ImageViewSwiper({id}) {
           delay: 2000, // Thời gian chuyển sidle
           disableOnInteraction: false, // Giữ auto chạy sao khi người dùng tương tác
         }}
-        speed={2000} // Tốc độ của transition 
-        loop = {true} // vòng lặp của chuyển swiper
+        speed={2000} // Tốc độ của transition
+        loop={true} // vòng lặp của chuyển swiper
       >
-       {dataView.map((view, index) => (
-      <SwiperSlide key={index}>
-        <img
-          className="img_swiper_view_more"
-          src={view.desk_img}
-          alt={`img view ${index + 1}`}
-        />
-      </SwiperSlide>
-    ))}
+        {dataView.map((view, index) => (
+          <SwiperSlide key={index}>
+            <img
+              className="img_swiper_view_more"
+              src={view.desk_img}
+              alt={`img view ${index + 1}`}
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
     </>
   );
 }
 ImageViewSwiper.propTypes = {
-  id: PropTypes.string.isRequired,
-}
-
+  id: PropTypes.number.isRequired,
+};

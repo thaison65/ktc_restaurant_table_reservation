@@ -313,6 +313,11 @@ body {
     width: 200px;
     height: 40px;
   }
+  .button_next_reservation:disabled {
+    background-color: #cccccc; 
+    color: #666666; 
+    cursor: not-allowed; 
+  }
 
   .container_gr_email_phone{
     display: flex;
@@ -417,7 +422,7 @@ display: flex;
 .container_header_dialog{
   width: 100%;
   display: flex;
-  justify-content: start;
+  justify-content: space-between;
   margin-left: 10px;
 }
 
@@ -449,6 +454,16 @@ display: flex;
 .swiper_view_more{
 height: 100px;
 }
+
+.div_no_view{
+  display: flex;
+  width: 500px;
+  height: 500px;
+  background-color: #007bff;
+  justify-content: center;
+  align-items: center;
+}
+
 
 @keyframes flash {
   0%{

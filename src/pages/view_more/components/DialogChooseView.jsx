@@ -6,17 +6,18 @@ import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
 import ic_arr_left_transition_swiper from "../../../assets/icons/arr_transition_left.svg";
 import ic_arr_right_transition_swiper from "../../../assets/icons/arr_transition_right.svg";
-import view1 from "../../../assets/images/img_view1.jpg";
-
+import ic_close_dialog from '../../../assets/icons/ic_close.svg'
 const DialogChooseView = ({
   isOpen,
   onClose,
   title,
   listViewAvailable,
   backDialog,
-  onImgSelect
+  onImgSelect,
+  closeDialog
 }) => {
   const swiperRef = useRef(null);
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleSlideChange = (swiper) => {
@@ -25,11 +26,14 @@ const DialogChooseView = ({
 
   const handleNext = () => {
     const selectedView = listViewAvailable[currentIndex];
+    setCurrentIndex(0);
     if (selectedView) {
-      onImgSelect(view1); // Truyền img về ContentDescriptionView (ở đây view1 được sử dụng như ví dụ, bạn có thể thay thế bằng `selectedView.img`)
+      const selectedViewId = selectedView.id;
+      onImgSelect(selectedViewId);
     }
     onClose();
   };
+
   if (!isOpen) return null;
 
   return (
@@ -38,6 +42,9 @@ const DialogChooseView = ({
         <div className="container_header_dialog">
           <button onClick={backDialog}>
             <img src={ic_arr_left_transition_swiper} alt="icon" />
+          </button>
+          <button onClick={closeDialog}>
+            <img src={ic_close_dialog} alt="icon" />
           </button>
         </div>
         <h2>{title}</h2>
@@ -66,16 +73,16 @@ const DialogChooseView = ({
               listViewAvailable.map((view, index) => (
                 <SwiperSlide key={index}>
                   <img
-                    src={view1}
+                    src={view.desk_img}
                     alt={`View ${index + 1}`}
                     className="dialog_view_image"
                   />
                 </SwiperSlide>
               ))
             ) : (
-              <SwiperSlide>
-                <p>No views available</p>
-              </SwiperSlide>
+              <div className="div_no_view">
+                <p className="p_no_view">view has no tables available.</p>
+              </div>
             )}
           </Swiper>
           <button
@@ -83,7 +90,9 @@ const DialogChooseView = ({
             onClick={() => swiperRef.current.swiper.slideNext()}
             style={{
               visibility:
-                currentIndex < listViewAvailable.length - 1 ? "visible" : "hidden",
+                currentIndex < listViewAvailable.length - 1
+                  ? "visible"
+                  : "hidden",
             }}
           >
             <img
@@ -93,7 +102,9 @@ const DialogChooseView = ({
             />
           </button>
         </div>
-        <button className="button_next_reservation" onClick={handleNext}>
+        <button 
+         disabled={listViewAvailable.length === 0}
+        className="button_next_reservation" onClick={handleNext}>
           NEXT
         </button>
       </div>
@@ -108,6 +119,7 @@ DialogChooseView.propTypes = {
   listViewAvailable: PropTypes.array.isRequired,
   backDialog: PropTypes.func,
   onImgSelect: PropTypes.func.isRequired,
+  closeDialog: PropTypes.func.isRequired
 };
 
 export default DialogChooseView;

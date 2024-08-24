@@ -9,20 +9,20 @@ import FooterHome from "./home_page/components/Footer";
 import view1 from "../assets/images/img_view1.jpg";
 import view2 from "../assets/images/img_view2.jpg";
 import "./home_page/css_home_page.css";
-
+import { API_URL } from "../assets/config/config_url";
 import { useEffect, useState } from "react";
 
 function HomePage() {
   const [dataCatagories, setCategories] = useState(null);
   useEffect(() => {
     async function getCategories() {
-      const url = "https://3806-58-187-122-34.ngrok-free.app/category/all";
+      const url = `${API_URL}category/all`;
       try {
         const res = await fetch(url, {
           method: "GET",
           headers: {
-            'Content-Type': 'application/json',
-            'ngrok-skip-browser-warning': true
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": true,
           },
         });
         if (!res.ok) {
@@ -30,7 +30,6 @@ function HomePage() {
         }
         const json = await res.json();
         setCategories(json);
-        console.log(json);
       } catch (error) {
         console.error(error.message);
       }

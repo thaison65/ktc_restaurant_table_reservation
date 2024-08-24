@@ -2,37 +2,54 @@ import PropTypes from "prop-types";
 import { useState, useCallback, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-const DialogCalendar = ({ isOpen, onClose, title, children, onListViewAvailable, onDateSelect }) => {
+import { API_URL } from "../../../assets/config/config_url";
+const DialogCalendar = ({
+  isOpen,
+  onClose,
+  title,
+  children,
+  onListViewAvailable,
+  onDateSelect,
+  id,
+}) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
- /*  const [listViewAvailable, setListViewAvailable] = useState([]) */;
-//Dang test
+
   const fetchAvailableView = useCallback(async () => {
-    const url = new URL('https://66c603f4134eb8f4349677b7.mockapi.io/views/views-availible');
+    const url = `${API_URL}views/views-available`;
     const params = {
-      date_search: '2024-08-24T00:00.000Z',
-      category_id: 2
+      date_search: `${selectedDate.toISOString()}`,
+      category_id: id,
     };
-    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]));
-    
+
     try {
-      const res = await fetch(url);
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "ngrok-skip-browser-warning": true,
+        },
+        body: JSON.stringify(params),
+      });
+
       if (!res.ok) {
         throw new Error(`Fetch data error: ${res.status}`);
       }
+
       const json = await res.json();
-      onListViewAvailable(json);
+      onListViewAvailable(json.data);
     } catch (error) {
       console.error(error.message);
     }
   }, []);
 
-  const handleDateChange = useCallback((date) => {
-    setSelectedDate(date);
-    fetchAvailableView(date);
-    onDateSelect(date);
-    console.log(date)
-  }, [fetchAvailableView, onDateSelect]);
+  const handleDateChange = useCallback(
+    (date) => {
+      setSelectedDate(date);
+      fetchAvailableView(date);
+      onDateSelect(date);
+    },
+    [fetchAvailableView, onDateSelect]
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -72,8 +89,9 @@ DialogCalendar.propTypes = {
   onClose: PropTypes.func.isRequired,
   title: PropTypes.string,
   children: PropTypes.node,
-  onListViewAvailable: PropTypes.func.isRequired, // Đảm bảo onListViewAvailable là một hàm
-  onDateSelect: PropTypes.func.isRequired, 
+  onListViewAvailable: PropTypes.func.isRequired,
+  onDateSelect: PropTypes.func.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 DialogCalendar.defaultProps = {

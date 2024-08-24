@@ -1,18 +1,21 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback} from "react";
 import DialogCalendar from "./DialogCalendar";
 import DialogChooseView from "./DialogChooseView";
 import DialogFillInformation from "./DiaLogFillInformation";
 import swal from "sweetalert";
 import PropTypes from "prop-types";
+
+import { API_URL } from '../../../assets/config/config_url';
+
 function ContentDescriptionView({ id, name, description }) {
   const [isOpenDialog, setIsOpenDialog] = useState(false);
   const [isOpenDialogViews, setIsOpenDialogViews] = useState(false);
   const [isOpenDialogFill, setIsOpenDialogFill] = useState(false);
-  const [dataView, setDataView] = useState(null);
+  const [dataView, setDataView] = useState({});
   const [listViewAvailable, setListViewAvailable] = useState([]);
-
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedImg, setSelectedImg] = useState(null);
+
 
   const handleDateSelect = (date) => {
     setSelectedDate(date);
@@ -24,7 +27,6 @@ function ContentDescriptionView({ id, name, description }) {
 
   const handleListViewAvailable = (list) => {
     setListViewAvailable(list);
-    console.log("Received listViewAvailable:", list);
   };
 
   const backDialogView = useCallback(() => {
@@ -32,6 +34,9 @@ function ContentDescriptionView({ id, name, description }) {
     setIsOpenDialog(true);
   }, []);
 
+  const CloseDialogChossView = useCallback(() =>{
+    setIsOpenDialogViews(false);
+  })
   const CloseDialogFillIC = useCallback(() => {
     setIsOpenDialogFill(false);
   }, []);
@@ -43,8 +48,7 @@ function ContentDescriptionView({ id, name, description }) {
   const CloseDialogCalendar = useCallback(() => {
     setIsOpenDialog(false);
     setIsOpenDialogViews(true);
-    console.log("close function", listViewAvailable);
-  }, [listViewAvailable]);
+  }, []);
 
   const CloseDialogViews = useCallback(() => {
     setIsOpenDialogViews(false);
@@ -53,18 +57,16 @@ function ContentDescriptionView({ id, name, description }) {
 
   const CloseDialogFill = useCallback(() => {
     setIsOpenDialogFill(false);
-    console.log(selectedDate);
-    console.log(selectedImg);
     swal(
       "Good job!",
       "Thank you for your interest in our service. We will respond to you as quickly as possible via email.",
       "success"
     );
-  }, [selectedDate, selectedImg]);
+  }, []);
 
   useEffect(() => {
     const getView = async () => {
-      const url = `https://3806-58-187-122-34.ngrok-free.app/category/getViews/${id}`;
+      const url = `${API_URL}category/getViews/${id}`;
       try {
         const res = await fetch(url, {
           method: "GET",
@@ -77,7 +79,7 @@ function ContentDescriptionView({ id, name, description }) {
           throw new Error(`Fetch data error: ${res.status}`);
         }
         const json = await res.json();
-        setDataView(json);
+        setDataView(json.data);
       } catch (error) {
         console.error(error.message);
       }
@@ -114,6 +116,7 @@ function ContentDescriptionView({ id, name, description }) {
         title="Restaurant Experience"
         onListViewAvailable={handleListViewAvailable}
         onDateSelect={handleDateSelect}
+        id={id}
       >
         <p>
           All payments for tickets purchased are fixed and final. The Restaurant
@@ -127,12 +130,15 @@ function ContentDescriptionView({ id, name, description }) {
         listViewAvailable={listViewAvailable}
         backDialog={backDialogView}
         onImgSelect={handleImgSelect}
+        closeDialog={CloseDialogChossView}
       ></DialogChooseView>
       <DialogFillInformation
         isOpen={isOpenDialogFill}
         isClose={CloseDialogFill}
         title={"Provide Your Details"}
         closeDialog={CloseDialogFillIC}
+        idCategorySelected={selectedImg}
+        dateSelected={selectedDate}
       ></DialogFillInformation>
     </div>
   );

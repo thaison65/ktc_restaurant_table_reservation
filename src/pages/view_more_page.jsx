@@ -14,9 +14,9 @@ function ViewMorePage() {
       <div className="container_content_main_home">
         <Header />
         <div className="container_swiper">
-          <ImageViewSwiper />
+          <ImageViewSwiper id={id} />
         </div>
-        <ContentDescriptionView id={id} name={name} description={description}/>
+        <ContentDescriptionView id={id} name={name} description={description} />
         <FooterViewMorePage />
       </div>
     </>

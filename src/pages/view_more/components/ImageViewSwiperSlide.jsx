@@ -2,12 +2,35 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
-import view1 from "../../../assets/images/img_view1.jpg";
-import view2 from "../../../assets/images/img_view2.jpg";
-import view3 from "../../../assets/images/img_view3.jpg";
-import view4 from "../../../assets/images/img_view4.jpg";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 
-export default function ImageViewSwiper() {
+export default function ImageViewSwiper({id}) {
+  const [dataView, setDataView] = useState([]);
+
+  useEffect(() => {
+    const getView = async () => {
+      const url = `https://3806-58-187-122-34.ngrok-free.app/category/getViews/2`;
+      try {
+        const res = await fetch(url, {
+          method: "GET",  
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": true,
+          },
+        });
+        if (!res.ok) {
+          throw new Error(`Fetch data error: ${res.status}`);
+        }
+        const json = await res.json();
+        setDataView(json.data);
+        console.log(dataView)
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    getView();
+  }, [id]);  
   return (
     <>
       <Swiper
@@ -15,41 +38,26 @@ export default function ImageViewSwiper() {
         modules={[Pagination, Autoplay]}
         className="mySwiper"
         autoplay={{
-          delay: 1500, // Thời gian chuyển sidle
+          delay: 2000, // Thời gian chuyển sidle
           disableOnInteraction: false, // Giữ auto chạy sao khi người dùng tương tác
         }}
         speed={2000} // Tốc độ của transition 
         loop = {true} // vòng lặp của chuyển swiper
       >
-        <SwiperSlide>
-          <img
-            className="img_swiper"
-            src={view1}
-            alt="img view"
-          ></img>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            className="img_swiper"
-            src={view2}
-            alt="img view"
-          ></img>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            className="img_swiper"
-            src={view3}
-            alt="img view"
-          ></img>
-        </SwiperSlide>
-        <SwiperSlide>
-          <img
-            className="img_swiper"
-            src={view4}
-            alt="img view"
-          ></img>
-        </SwiperSlide>
+       {dataView.map((view, index) => (
+      <SwiperSlide key={index}>
+        <img
+          className="img_swiper_view_more"
+          src={view.desk_img}
+          alt={`img view ${index + 1}`}
+        />
+      </SwiperSlide>
+    ))}
       </Swiper>
     </>
   );
 }
+ImageViewSwiper.propTypes = {
+  id: PropTypes.string.isRequired,
+}
+

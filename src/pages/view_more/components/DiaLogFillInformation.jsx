@@ -1,28 +1,51 @@
 import { PropTypes } from "prop-types";
 import { useState } from "react";
 
-const DialogFillInformation = ({ title, isOpen, isClose }) => {
-  const [phone, setPhone] = useState('');
+import ic_close from "../../../assets/icons/ic_close.svg";
+const DialogFillInformation = ({ title, isOpen, isClose, closeDialog}) => {
+  const [phone, setPhone] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [numberPerson, setNumberPerson] =useState(1);
   if (!isOpen) return null;
-  
 
-  const handleChange = (event) => {
+  const handleChangeName = (event) => {
     const input = event.target.value;
-    const onlyNumbers = input.replace(/[^0-9]/g, ''); // Loại bỏ ký tự không phải số
+    setName(input)
+  };
+  const handleChangePhone = (event) => {
+    const input = event.target.value;
+    const onlyNumbers = input.replace(/[^0-9]/g, ""); // Loại bỏ ký tự không phải số
     setPhone(onlyNumbers);
   };
+  const handleChangeEmail = (event) => {
+    const input = event.target.value;
+      setEmail(input)
+  };
+
+  const handleChangeNumber = (event) =>{
+    const input = event.target.value;
+    setNumberPerson(input)
+  }
   return (
     <div className="container_form_customer">
       <div className="dialog_fill_information">
-        <h2>{title}</h2>
-        <form id="myFrom">
+        <div className="container_header_dialog_icon">
+          <button onClick={closeDialog}>
+            <img src={ic_close} alt="icon" />
+          </button>
+        </div>
+
+        <form id="myFrom"> <h2>{title}</h2>
           <div className="form_group">
             <label htmlFor="name">Name:</label>
             <input
               type="text"
               id="name"
               name="name"
+              value={name}
               placeholder="Nhập tên của bạn"
+              onChange={handleChangeName}
               required
             />
           </div>
@@ -35,7 +58,7 @@ const DialogFillInformation = ({ title, isOpen, isClose }) => {
                 name="phone"
                 placeholder="Nhập số điện thoại"
                 value={phone}
-                onChange={handleChange}
+                onChange={handleChangePhone}
                 required
               />
             </div>
@@ -46,7 +69,9 @@ const DialogFillInformation = ({ title, isOpen, isClose }) => {
                 type="email"
                 id="email"
                 name="email"
+                value={email}
                 placeholder="Nhập email của bạn"
+                onChange={handleChangeEmail}
                 required
               />
             </div>
@@ -59,32 +84,13 @@ const DialogFillInformation = ({ title, isOpen, isClose }) => {
               id="number_of_people"
               name="number_of_people"
               min="1"
+              value={numberPerson}
+              onChange={handleChangeNumber}
               placeholder="Nhập số người tham dự"
               required
+          
             />
           </div>
-          <div className="form_group">
-            <label htmlFor="arrival_time">Arrived time:</label>
-            <input
-              type="time"
-              id="arrival_time"
-              name="arrival_time"
-              className="arrival_time"
-              required
-            />
-          </div>
-
-        {/*   <div className="form_group">
-            <label htmlFor="duration">Expect time(hour):</label>
-            <input
-              type="number"
-              id="duration"
-              name="duration"
-              min="1"
-              placeholder="Nhập thời gian dự kiến"
-              required
-            />
-          </div> */}
         </form>
         <div className="container_note">
           <p>
@@ -106,6 +112,7 @@ DialogFillInformation.propTypes = {
   title: PropTypes.String,
   isOpen: PropTypes.bool.isRequired,
   isClose: PropTypes.func.isRequired,
+  closeDialog: PropTypes.func,
 };
 
 export default DialogFillInformation;

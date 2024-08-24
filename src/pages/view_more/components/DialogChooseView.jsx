@@ -4,70 +4,96 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
-import ic_arr_left_transition_swiper from '../../../assets/icons/arr_transition_left.svg';
-import ic_arr_right_transition_swiper from '../../../assets/icons/arr_transition_right.svg';
+import ic_arr_left_transition_swiper from "../../../assets/icons/arr_transition_left.svg";
+import ic_arr_right_transition_swiper from "../../../assets/icons/arr_transition_right.svg";
 import view1 from "../../../assets/images/img_view1.jpg";
-import view2 from "../../../assets/images/img_view2.jpg";
-import view3 from "../../../assets/images/img_view3.jpg";
-import view4 from "../../../assets/images/img_view4.jpg";
 
-const DialogChooseView = ({ isOpen, onClose, title }) => {
-  
-    const swiperRef = useRef(null); // sử dụng useRef để tác động vào DOM nhằm lấy index của swiper
-    const [currentIndex, setCurrentIndex] = useState(0); // Giá trị hiện tại của swiper 
+const DialogChooseView = ({
+  isOpen,
+  onClose,
+  title,
+  listViewAvailable,
+  backDialog,
+  onImgSelect
+}) => {
+  const swiperRef = useRef(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-    const handleSlideChange = (swiper) => {
-      setCurrentIndex(swiper.activeIndex); // Cập nhật index 
-    };
+  const handleSlideChange = (swiper) => {
+    setCurrentIndex(swiper.activeIndex);
+  };
 
+  const handleNext = () => {
+    const selectedView = listViewAvailable[currentIndex];
+    if (selectedView) {
+      onImgSelect(view1); // Truyền img về ContentDescriptionView (ở đây view1 được sử dụng như ví dụ, bạn có thể thay thế bằng `selectedView.img`)
+    }
+    onClose();
+  };
   if (!isOpen) return null;
+
   return (
     <div className="dialog-overlay">
       <div className="dialog">
+        <div className="container_header_dialog">
+          <button onClick={backDialog}>
+            <img src={ic_arr_left_transition_swiper} alt="icon" />
+          </button>
+        </div>
         <h2>{title}</h2>
         <div className="container_content_dialog_view">
-        { currentIndex == 0 ? <div className="draf_container"></div>: <button
+          <button
             className="button_transition_swiper"
             onClick={() => swiperRef.current.swiper.slidePrev()}
-            style={{ display: currentIndex === 0 ? "none" : "block" }} // Ẩn nút khi ở trang đầu tiên
+            style={{
+              visibility: currentIndex > 0 ? "visible" : "hidden",
+            }}
           >
-            <img 
-            className="ic_transition_arr_swiper" alt="icons" src={ic_arr_left_transition_swiper}/>
-          </button>}
+            <img
+              className="ic_transition_arr_swiper"
+              alt="icons"
+              src={ic_arr_left_transition_swiper}
+            />
+          </button>
           <Swiper
             pagination={true}
             modules={[Pagination, Autoplay]}
             className="mySwiper_view"
-            ref={swiperRef} // Gán ref vào Swiper
+            ref={swiperRef}
             onSlideChange={handleSlideChange}
           >
-            <SwiperSlide>
-              <img src={view1} alt="images view" className="dialog_view_image" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={view2} alt="images view" className="dialog_view_image" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={view3} alt="images view" className="dialog_view_image" />
-            </SwiperSlide>
-            <SwiperSlide>
-              <img src={view4} alt="images view" className="dialog_view_image" />
-            </SwiperSlide>
+            {listViewAvailable.length > 0 ? (
+              listViewAvailable.map((view, index) => (
+                <SwiperSlide key={index}>
+                  <img
+                    src={view1}
+                    alt={`View ${index + 1}`}
+                    className="dialog_view_image"
+                  />
+                </SwiperSlide>
+              ))
+            ) : (
+              <SwiperSlide>
+                <p>No views available</p>
+              </SwiperSlide>
+            )}
           </Swiper>
-          
-         { currentIndex == 3 ? <div className="draf_container"></div>:
-             <button
-             className="button_transition_swiper"
-             onClick={() => swiperRef.current.swiper.slideNext()} // Chuyển đến slide tiếp theo
-          style={{ display: currentIndex === 3  ? "none" : "block" }}  >
-             <img 
-             // Ẩn nút khi ở trang đầu tiên
-             className="ic_transition_arr_swiper" 
-             alt="icons" src={ic_arr_right_transition_swiper}/>
-           </button>       
-         }     
+          <button
+            className="button_transition_swiper"
+            onClick={() => swiperRef.current.swiper.slideNext()}
+            style={{
+              visibility:
+                currentIndex < listViewAvailable.length - 1 ? "visible" : "hidden",
+            }}
+          >
+            <img
+              className="ic_transition_arr_swiper"
+              alt="icons"
+              src={ic_arr_right_transition_swiper}
+            />
+          </button>
         </div>
-        <button className="button_next_reservation" onClick={onClose}>
+        <button className="button_next_reservation" onClick={handleNext}>
           NEXT
         </button>
       </div>
@@ -79,6 +105,9 @@ DialogChooseView.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   title: PropTypes.string,
+  listViewAvailable: PropTypes.array.isRequired,
+  backDialog: PropTypes.func,
+  onImgSelect: PropTypes.func.isRequired,
 };
 
 export default DialogChooseView;

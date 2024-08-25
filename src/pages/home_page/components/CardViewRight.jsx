@@ -3,18 +3,22 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 
-function CardViewRight({id, name, description, imageSrc }) {
+function CardViewRight({ id, name, description, imageSrc }) {
   const navigate = useNavigate();
 
+  // hàm chuyển qua trang view more page truyền tham số id, name và description
   const handleClick = () => {
-    navigate("/viewMorePage", {state : {id, name, description}});
+    navigate("/viewMorePage", { state: { id, name, description } });
   };
 
-  const [inProp, setInProp] = useState(false); 
 
+
+  const [inProp, setInProp] = useState(false);
+
+  //kích hoạt transition 
   useEffect(() => {
-    setInProp(true); 
-  }, []); // dependency arr
+    setInProp(true);
+  }, []);
 
   return (
     <CSSTransition

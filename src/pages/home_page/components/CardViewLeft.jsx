@@ -12,6 +12,7 @@ function CardViewLeft({ id, name, description, imageSrc }) {
     navigate("/viewMorePage", {state : {id}});
   };
 
+  //set In Prop để bắt đầu cho chuyển động transition 
   useEffect(() => {
     setInProp(true);
   }, []);

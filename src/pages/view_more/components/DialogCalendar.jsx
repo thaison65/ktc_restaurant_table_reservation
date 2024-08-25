@@ -4,21 +4,23 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { API_URL } from "../../../assets/config/config_url";
 const DialogCalendar = ({
-  isOpen,
-  onClose,
-  title,
-  children,
-  onListViewAvailable,
-  onDateSelect,
-  id,
+  isOpen, // mở dialog chuyển từ contentdescription
+  onClose, // đóng dialog
+  title, // title
+  children, // thẻ con
+  onListViewAvailable, // danh sách tróng theo ngày
+  onDateSelect, // ngày được chon
+  id, // id loại view
 }) => {
+
   const [selectedDate, setSelectedDate] = useState(new Date());
 
+  //hàm tìm danh sách bàn trống theo ngày và id được chọn
   const fetchAvailableView = useCallback(async () => {
     const url = `${API_URL}views/views-available`;
     const params = {
-      date_search: `${selectedDate.toISOString()}`,
-      category_id: id,
+      date_search: `${selectedDate.toISOString()}`,// ngày được chon
+      category_id: id,// bàn được chọn
     };
 
     try {
@@ -32,25 +34,27 @@ const DialogCalendar = ({
       });
 
       if (!res.ok) {
-        throw new Error(`Fetch data error: ${res.status}`);
+        throw new Error(`Lỗi fetch API: ${res.status}`);
       }
 
       const json = await res.json();
-      onListViewAvailable(json.data);
+      onListViewAvailable(json.data);// truyền danh sách này cho content để contend truyền cho choose view hiển thị các bàn trống
     } catch (error) {
-      console.error(error.message);
+      console.error("Lỗi API danh sách bàn trống theo ngày và loại view", error.message);
     }
   }, []);
 
+  // hàm thay đổi ngày trong dialog
   const handleDateChange = useCallback(
     (date) => {
-      setSelectedDate(date);
-      fetchAvailableView(date);
-      onDateSelect(date);
+      setSelectedDate(date); // set ngày mới chọn
+      fetchAvailableView(date);// đồng thời fetch dữ liệu cho ngày mới chọn
+      onDateSelect(date); // truyền ngày mới chọn cho content view để content truyền cho request booking
     },
-    [fetchAvailableView, onDateSelect]
+    [fetchAvailableView, onDateSelect] // mảng arr dependece -> khi 2 thằng này thay đổi hàm sẽ đươc gọi lại
   );
 
+  //hàm cho ngày hôm nay
   useEffect(() => {
     if (isOpen) {
       fetchAvailableView(new Date());
@@ -65,17 +69,15 @@ const DialogCalendar = ({
         <h2 className="title_dialog">{title}</h2>
         <div className="dialog-content">{children}</div>
         <DatePicker
-          minDate={new Date()}
-          className="date_picker"
-          selected={selectedDate}
-          onChange={handleDateChange}
-          inline
+          minDate={new Date()}//không chọn ngày quá khứ
+          className="date_picker" 
+          selected={selectedDate} // truyền ngày được chọn cho content view
+          onChange={handleDateChange} //hàm chọn ngày khác
+          inline // luôn hiển thị datepicker mà kh cần thao tác
         />
-        {selectedDate && (
           <div>
             <p>{selectedDate.toDateString()}</p>
           </div>
-        )}
         <button className="button_next_reservation" onClick={onClose}>
           NEXT
         </button>

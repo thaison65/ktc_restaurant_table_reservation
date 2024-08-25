@@ -6,11 +6,13 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { API_URL } from "../../../assets/config/config_url";
 export default function ImageViewSwiper({ id }) {
-  const [dataView, setDataView] = useState([{}]);
+  const [dataView, setDataView] = useState([]);
+
+  // check xem trong đây có bàn nào không, nếu không có tổn tại sẽ kh có booking
   useEffect(() => {
     const getView = async () => {
       const url = `${API_URL}category/getViews/${id}`;
-      console.log(url);
+      console.log(id);
       try {
         const res = await fetch(url, {
           method: "GET",
@@ -20,12 +22,13 @@ export default function ImageViewSwiper({ id }) {
           },
         });
         if (!res.ok) {
-          throw new Error(`Fetch data error: ${res.status}`);
+          throw new Error(`Lỗi fetch API danh sách bàn theo view: ${res.status}`);
         }
         const json = await res.json();
         setDataView(json.data);
+        console.log(dataView)
       } catch (error) {
-        console.error(error.message);
+        console.error("Lỗi fecth bàn theo view",error.message);
       }
     };
     getView();
@@ -33,7 +36,7 @@ export default function ImageViewSwiper({ id }) {
   return (
     <>
       <Swiper
-        pagination={true}
+        pagination={true} // bật phân trang
         modules={[Pagination, Autoplay]}
         className="mySwiper"
         autoplay={{

@@ -6,35 +6,40 @@ import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
 import ic_arr_left_transition_swiper from "../../../assets/icons/arr_transition_left.svg";
 import ic_arr_right_transition_swiper from "../../../assets/icons/arr_transition_right.svg";
-import ic_close_dialog from '../../../assets/icons/ic_close.svg'
+import ic_close_dialog from "../../../assets/icons/ic_close.svg";
 const DialogChooseView = ({
   isOpen,
   onClose,
   title,
-  listViewAvailable,
-  backDialog,
-  onImgSelect,
-  closeDialog
+  listViewAvailable, // danh sách bàn trống theo ngày và view được chọn 
+  backDialog, // hàm back về dialog chọn ngày từ chọn view
+  onImgSelect, // truyền id view được chọn
+  closeDialog, // đóng dialog
 }) => {
+  // sử dụng swiperRef để lưu trữ index swiper để chắc chắn rằng kh cần re-render lại khi thay đổi index swiper 
   const swiperRef = useRef(null);
 
+  //vị trí của swiper 
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  //chuyển slide swiper 
   const handleSlideChange = (swiper) => {
+    //lấy vị trí hiện tại
     setCurrentIndex(swiper.activeIndex);
   };
 
+  // button chuyển chọn view sang điền thông tin
   const handleNext = () => {
-    const selectedView = listViewAvailable[currentIndex];
-    setCurrentIndex(0);
+    const selectedView = listViewAvailable[currentIndex]; // lấy view đã chọn truyền qua gửi request về booking
+    setCurrentIndex(0);// resert lại swiper khi tắt hoặc chuyển dialog
     if (selectedView) {
       const selectedViewId = selectedView.id;
-      onImgSelect(selectedViewId);
+      onImgSelect(selectedViewId); // gửi id bàn được chọn về cho booking 
     }
-    onClose();
+    onClose(); //chuyển dialog , hàm này nhận từ contendescription
   };
 
-  if (!isOpen) return null;
+  if (!isOpen) return null;// kh re-reder lại khi fase,tránh load trang quá nhiều
 
   return (
     <div className="dialog-overlay">
@@ -52,6 +57,7 @@ const DialogChooseView = ({
           <button
             className="button_transition_swiper"
             onClick={() => swiperRef.current.swiper.slidePrev()}
+            /* handle ẩn button left cho trang đầu */
             style={{
               visibility: currentIndex > 0 ? "visible" : "hidden",
             }}
@@ -69,6 +75,7 @@ const DialogChooseView = ({
             ref={swiperRef}
             onSlideChange={handleSlideChange}
           >
+            {/* handle cảnh báo rằng đã hết view trống */}
             {listViewAvailable.length > 0 ? (
               listViewAvailable.map((view, index) => (
                 <SwiperSlide key={index}>
@@ -80,14 +87,16 @@ const DialogChooseView = ({
                 </SwiperSlide>
               ))
             ) : (
-              <div className="div_no_view">
-                <p className="p_no_view">view has no tables available.</p>
+              <div className="container_for_no_view_available_dialog">
+                Unfortunately, no reservations are available at the moment.
+                Please choose another view.
               </div>
             )}
           </Swiper>
           <button
             className="button_transition_swiper"
             onClick={() => swiperRef.current.swiper.slideNext()}
+            /* handle ẩn button right khi hết swiper  */
             style={{
               visibility:
                 currentIndex < listViewAvailable.length - 1
@@ -102,24 +111,25 @@ const DialogChooseView = ({
             />
           </button>
         </div>
-        <button 
-         disabled={listViewAvailable.length === 0}
-        className="button_next_reservation" onClick={handleNext}>
-          NEXT
-        </button>
+        {/* nếu không có view ẩn button */}
+        {listViewAvailable.length > 0 && (
+          <button className="button_next_reservation" onClick={handleNext}>
+            NEXT
+          </button>
+        )}
       </div>
     </div>
   );
 };
 
 DialogChooseView.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
+  isOpen: PropTypes.bool.isRequired, // mở dialog
+  onClose: PropTypes.func.isRequired, 
   title: PropTypes.string,
-  listViewAvailable: PropTypes.array.isRequired,
-  backDialog: PropTypes.func,
-  onImgSelect: PropTypes.func.isRequired,
-  closeDialog: PropTypes.func.isRequired
+  listViewAvailable: PropTypes.array.isRequired, // view có sẵn theo ngày và loại viwe
+  backDialog: PropTypes.func, // hàm chuyển dialog
+  onImgSelect: PropTypes.func.isRequired, //hàm chuyển id view được chọn
+  closeDialog: PropTypes.func.isRequired, // hàm đóng dialog
 };
 
 export default DialogChooseView;

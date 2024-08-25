@@ -2,68 +2,71 @@ import { useState, useEffect, useCallback} from "react";
 import DialogCalendar from "./DialogCalendar";
 import DialogChooseView from "./DialogChooseView";
 import DialogFillInformation from "./DiaLogFillInformation";
-import swal from "sweetalert";
 import PropTypes from "prop-types";
 
 import { API_URL } from '../../../assets/config/config_url';
 
 function ContentDescriptionView({ id, name, description }) {
-  const [isOpenDialog, setIsOpenDialog] = useState(false);
-  const [isOpenDialogViews, setIsOpenDialogViews] = useState(false);
-  const [isOpenDialogFill, setIsOpenDialogFill] = useState(false);
-  const [dataView, setDataView] = useState({});
-  const [listViewAvailable, setListViewAvailable] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [selectedImg, setSelectedImg] = useState(null);
+  const [isOpenDialog, setIsOpenDialog] = useState(false);// set trạng thái cho dialog chọn ngày
+  const [isOpenDialogViews, setIsOpenDialogViews] = useState(false);// set trạng thái cho dialog chọn view
+  const [isOpenDialogFill, setIsOpenDialogFill] = useState(false); // set trạng thái cho dialog điền thông tin
+  const [dataView, setDataView] = useState({}); // danh sách các view trong theo loại
+  const [listViewAvailable, setListViewAvailable] = useState([]); // danh sách các view trong được call API theo ngày 
+  const [selectedDate, setSelectedDate] = useState(null); // ngày chọn booking
+  const [selectedImg, setSelectedImg] = useState(null); // view chọn booking
 
-
+  // hàm chọn ngày
   const handleDateSelect = (date) => {
     setSelectedDate(date);
   };
-
+  
+  //hàm chọn view
   const handleImgSelect = (img) => {
     setSelectedImg(img);
   };
 
+  //hàm danh sách bàn trống theo ngày được trả về từ dialog chọn ngày
   const handleListViewAvailable = (list) => {
     setListViewAvailable(list);
   };
 
+  //hàm đóng dialog chọn view và trở về dialog chọn ngày
   const backDialogView = useCallback(() => {
     setIsOpenDialogViews(false);
     setIsOpenDialog(true);
   }, []);
 
+  //hàm chọn view được truyền từ dialog chọn view
   const CloseDialogChossView = useCallback(() =>{
     setIsOpenDialogViews(false);
   })
+  //Hàm đóng view điền thông tin booking
   const CloseDialogFillIC = useCallback(() => {
     setIsOpenDialogFill(false);
   }, []);
-
+  //hàm mở dialog chọn ngày
   const OpenDialogCalendar = useCallback(() => {
     setIsOpenDialog(true);
   }, []);
 
+  //hàm chuyển từ dialog chọn ngày - > chọn view
   const CloseDialogCalendar = useCallback(() => {
     setIsOpenDialog(false);
     setIsOpenDialogViews(true);
   }, []);
 
+  // hàm chuyển từ dialog view -> điền thông tin
   const CloseDialogViews = useCallback(() => {
     setIsOpenDialogViews(false);
     setIsOpenDialogFill(true);
   }, []);
 
+  // Đóng thông tin khách hàng và gửi request
   const CloseDialogFill = useCallback(() => {
     setIsOpenDialogFill(false);
-    swal(
-      "Good job!",
-      "Thank you for your interest in our service. We will respond to you as quickly as possible via email.",
-      "success"
-    );
   }, []);
 
+  //lấy danh sách bàn theo view
   useEffect(() => {
     const getView = async () => {
       const url = `${API_URL}category/getViews/${id}`;
@@ -109,14 +112,13 @@ function ContentDescriptionView({ id, name, description }) {
       ) : (
         <div>Loading...</div>
       )}
-
       <DialogCalendar
-        isOpen={isOpenDialog}
-        onClose={CloseDialogCalendar}
-        title="Restaurant Experience"
-        onListViewAvailable={handleListViewAvailable}
-        onDateSelect={handleDateSelect}
-        id={id}
+        isOpen={isOpenDialog} // mở dialog
+        onClose={CloseDialogCalendar}// đóng dialog
+        title="Restaurant Experience" // tile dialog 
+        onListViewAvailable={handleListViewAvailable} // danh sách bàn có sẵn cho từng view theo ngày
+        onDateSelect={handleDateSelect} // truyền ngày được chọn cho contentdescription view
+        id={id} // truyền id view cho dialog
       >
         <p>
           All payments for tickets purchased are fixed and final. The Restaurant
@@ -127,18 +129,18 @@ function ContentDescriptionView({ id, name, description }) {
         isOpen={isOpenDialogViews}
         onClose={CloseDialogViews}
         title={"Choose View"}
-        listViewAvailable={listViewAvailable}
-        backDialog={backDialogView}
-        onImgSelect={handleImgSelect}
-        closeDialog={CloseDialogChossView}
+        listViewAvailable={listViewAvailable} // danh sách bàn có sẵn cho từng view theo ngày
+        backDialog={backDialogView} // hàm cho chuyển từ dilaog view -> chọn ngày
+        onImgSelect={handleImgSelect} // chuyền id bàn được chọn
+        closeDialog={CloseDialogChossView}// đóng dialog
       ></DialogChooseView>
       <DialogFillInformation
-        isOpen={isOpenDialogFill}
-        isClose={CloseDialogFill}
-        title={"Provide Your Details"}
-        closeDialog={CloseDialogFillIC}
-        idCategorySelected={selectedImg}
-        dateSelected={selectedDate}
+        isOpen={isOpenDialogFill} // mở dialog
+        isClose={CloseDialogFill} // đóng dialog
+        title={"Provide Your Details"} // title
+        closeDialog={CloseDialogFillIC} // hàm cho icon đóng dialog
+        idCategorySelected={selectedImg} // id bàn được chon
+        dateSelected={selectedDate}// id ngày được chọn
       ></DialogFillInformation>
     </div>
   );
@@ -148,6 +150,6 @@ ContentDescriptionView.propTypes = {
   id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-};
+}; //truyền dữ liệu sang diff component cho dialog
 
 export default ContentDescriptionView;

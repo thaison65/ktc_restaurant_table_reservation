@@ -20,15 +20,11 @@ export default function ImageHeaderSwiper() {
           delay: 1500, // Thời gian chuyển sidle
           disableOnInteraction: false, // Giữ auto chạy sao khi người dùng tương tác
         }}
-        speed={2000} // Tốc độ của transition 
-        loop = {true} // vòng lặp của chuyển swiper
+        speed={2000} // Tốc độ của transition
+        loop={true} // vòng lặp của chuyển swiper
       >
         <SwiperSlide>
-          <img
-            className="img_swiper"
-            src={img_food_swiper1}
-            alt="img view"
-          ></img>
+          <img className="C" src={img_food_swiper1} alt="img view"></img>
         </SwiperSlide>
         <SwiperSlide>
           <img

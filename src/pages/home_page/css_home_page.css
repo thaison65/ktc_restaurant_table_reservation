@@ -1,5 +1,7 @@
 :root {
-    background-image: linear-gradient(white, #737373);
+    background-color: white;
+    display: flex;
+    flex-direction: column;
 }
 
 body {
@@ -8,9 +10,11 @@ body {
 
 
 .header-home {
+    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+
 }
 
 .header-home ul {
@@ -56,15 +60,21 @@ body {
 
 .mySwiper {
     display: flex;
-
-}
-
-.img_swiper {
+    height: 400px;
     width: 100%;
-    height: 327px;
-    object-fit: cover;
+    z-index: 100;
 }
-
+.container_swiper {
+    width: 100%; 
+    height: 400px;
+    overflow: hidden; /* Đảm bảo hình ảnh không bị tràn */
+  }
+  
+  .container_swiper img {
+    width: 100%; /* Hình ảnh sẽ rộng bằng chiều rộng của div */
+    height: 100%; /* Hình ảnh sẽ cao bằng chiều cao của div */
+    object-fit: cover; /* Đảm bảo hình ảnh luôn lấp đầy không gian div mà không bị méo */
+  }
 .container_div_home_welcome {
     display: flex;
     justify-content: center;
@@ -96,10 +106,11 @@ body {
 }
 
 .container_description_img_view {
-    margin: 100px 12px 0 0;
+    margin: 100px 10px 0 0;
     display: flex;
     align-items: center;
-    justify-content: end;
+    width: 100%;
+    justify-content: end
 
 }
 
@@ -107,19 +118,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: linear-gradient(to right, rgb(121, 121, 121), #737373);
-    opacity: 0.8;
+    background-color: rgba(0, 0, 0, 0.1); 
     max-width: 500px;
     padding: 0 20px 0 20px;
-    height: 230px;
     position: relative;
-    left: 80px;
+    left: 40px;
 }
 
 .container_image_view {
+    width: 100%; 
     display: flex;
-    height: 274px;
-    /*   width: 400px; */
+    justify-content: center;
 }
 
 .text_name_view {
@@ -131,45 +140,68 @@ body {
 }
 
 .text_description_view {
+    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    line-height: 1.6em;
+    height: auto;
+    max-height: 8em; 
     font-size: 24px;
-    text-align: center;
+    -webkit-line-clamp: 5;
+    font-weight: 500;
     color: white;
     font-family: "Rochester", cursive;
-    font-weight: 400;
+    text-align: center;
 }
 
 .button_booking {
     width: 150px;
-    height: 90px;
-    border-radius: 2;
+    border-radius: 2px;
+    border: none;
     font-weight: 600;
+    padding: 16px;
     margin-bottom: 8px;
 }
 
 .container_description_img_view_left {
-    margin: 100px 0px 0px 24px;
+    margin: 100px 0px 0px 10px;
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: start;
-
+    width: 100%;
 }
 
 .container_description_view_left {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-image: linear-gradient(to right, rgb(121, 121, 121), #737373);
-    opacity: 0.8;
+    background-color: rgba(0, 0, 0, 0.1); 
+    border-radius: 4px;
     max-width: 500px;
     padding: 0 20px 0 20px;
-    height: 230px;
     position: relative;
-    right: 80px;
+    right: 40px;
 }
 
 .container_image_view_left {
+    width: 100%; 
     display: flex;
-    height: 274px;
+    justify-content: center;
+}
+.img_card_view_left{
+    max-width: 100%;
+  height: auto; 
+  object-fit: cover; 
+  transition: all 0.3s ease-in-out;
+}
+.img_card_view_right {
+    max-width: 100%; 
+  height: auto;
+  object-fit: cover; 
+  transition: all 0.3s ease-in-out; 
 }
 
 .text_name_view_left {
@@ -181,27 +213,40 @@ body {
 }
 
 .text_description_view_left {
+    display: block;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    line-height: 1.6em;
+    height: auto;
+    max-height: 8em; 
     font-size: 24px;
-    text-align: center;
+    -webkit-line-clamp: 5;
+    font-weight: 500;
     color: white;
     font-family: "Rochester", cursive;
-    font-weight: 400;
-}
+    text-align: center;
+  }
+  
+  
 
 .button_booking_left {
     width: 150px;
-    height: 90px;
-    border-radius: 2;
+    border-radius: 2px;
+    border: none;
     font-weight: 600;
+    padding: 16px;
     margin-bottom: 8px;
 }
 
 .footer_home {
-    padding: 20px 0 20px 0;
+
     display: flex;
-    justify-content: space-around;
     background-color: white;
     margin-top: 32px;
+    flex-direction: column;
+    width: 100%;
 
 }
 
@@ -217,15 +262,16 @@ body {
 
 .text_email,
 .text_phone_number {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 500;
     margin: 0;
 }
 
 .text_address {
-    font-size: 28px;
-    font-weight: 600;
-    margin: 10px;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 0;
+    margin: 0;
 }
 
 .card_view_welcome_transition-enter {
@@ -261,17 +307,29 @@ body {
     transition: opacity 4000ms, transform 4000ms; /* Thời gian chuyển tiếp*/
   }
 
-@media only screen and (max-width: 900px) {
+  .container_content_main_home{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-image: linear-gradient(white, #bcbbbb);
+    margin: 0 150px 0 150px ;
+    border: 2px 0 black;
+  }
+
+  .container_text_icon{
+    padding: 0;
+    margin: 0;
+  }
+
+@media only screen and (max-width: 1200px) {
+    
     .container_description_img_view {
-        margin: 100px 0px 0px 24px;
+        /* margin: 100px 0px 0px 12px; */
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: start;
-    }
-
-    .img_card_view_right {
-        width: 640px;
+        width: 100%;
     }
 
     .container_description_view {
@@ -282,20 +340,18 @@ body {
         opacity: 0.8;
         max-width: 500px;
         padding: 0 20px 0 20px;
-        height: 230px;
+        margin: 0;
         left: 0;
         top: 50px;
     }
 
     .container_description_img_view_left {
-        margin: 100px 0px 0px 24px;
+       /*  margin: 100px 0px 0px 24px; */
         display: flex;
         flex-direction: column;
         align-items: center;
+        width: 100%;
         justify-content: start;
-    }
-    .img_card_view_left{
-        width: 640px;
     }
     .container_description_view_left {
         display: flex;
@@ -304,8 +360,7 @@ body {
         background-image: linear-gradient(to right, rgb(121, 121, 121), #737373);
         opacity: 0.8;
         max-width: 500px;
-        padding: 0 20px 0 20px;
-        height: 230px;
+       /*  padding: 0 20px 0 20px; */
         position: relative;
         right: 0;
         bottom: 50px;

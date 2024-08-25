@@ -1,81 +1,155 @@
-import { useState, useEffect } from "react";
-import imgView from "../../../assets/images/img_view1.jpg";
-import icArrRight from "../../../assets/icons/ic_arrow_right.svg";
-import DialogCalendar from './DialogCalendar';
+import { useState, useEffect, useCallback} from "react";
+import DialogCalendar from "./DialogCalendar";
 import DialogChooseView from "./DialogChooseView";
 import DialogFillInformation from "./DiaLogFillInformation";
-import swal from "sweetalert";
-function ContentDescriptionView() {
-  const text = `The Ocean Breeze Table is perfectly positioned by a large window, offering stunning panoramic views of the vast sparkling blue sea. The gentle sea breezes flow through, enhancing the tranquil and serene ambiance of your dining experience. As you enjoy your meal, you will be captivated by the endless horizon and the rhythmic sound of the waves. This ideal location provides a sense of calm and relaxation, allowing you to fully immerse yourself in the beauty of the ocean while savoring each bite. Whether for a romantic dinner or a peaceful meal with friends, the Ocean Breeze Table offers a truly memorable experience.`;
+import PropTypes from "prop-types";
 
-  const [displayedText, setDisplayedText] = useState(""); //Hiển thị từng chữ cái
-  const [index, setIndex] = useState(0); // chỉ số thứ tự của chữ
-  const [isOpenDialog, setIsOpenDialog] = useState(false);
-  const [isOpenDialogViews, setIsOpenDialogViews] = useState(false);
-  const [isOpenDialogFill, setIsOpenDialogFill] = useState(false);
+import { API_URL } from '../../../assets/config/config_url';
 
-  const OpenDialogCalendar = () => {
+function ContentDescriptionView({ id, name, description }) {
+  const [isOpenDialog, setIsOpenDialog] = useState(false);// set trạng thái cho dialog chọn ngày
+  const [isOpenDialogViews, setIsOpenDialogViews] = useState(false);// set trạng thái cho dialog chọn view
+  const [isOpenDialogFill, setIsOpenDialogFill] = useState(false); // set trạng thái cho dialog điền thông tin
+  const [dataView, setDataView] = useState({}); // danh sách các view trong theo loại
+  const [listViewAvailable, setListViewAvailable] = useState([]); // danh sách các view trong được call API theo ngày 
+  const [selectedDate, setSelectedDate] = useState(null); // ngày chọn booking
+  const [selectedImg, setSelectedImg] = useState(null); // view chọn booking
+
+  // hàm chọn ngày
+  const handleDateSelect = (date) => {
+    setSelectedDate(date);
+  };
+  
+  //hàm chọn view
+  const handleImgSelect = (img) => {
+    setSelectedImg(img);
+  };
+
+  //hàm danh sách bàn trống theo ngày được trả về từ dialog chọn ngày
+  const handleListViewAvailable = (list) => {
+    setListViewAvailable(list);
+  };
+
+  //hàm đóng dialog chọn view và trở về dialog chọn ngày
+  const backDialogView = useCallback(() => {
+    setIsOpenDialogViews(false);
     setIsOpenDialog(true);
-    
-};
-  const CloseDialogCalendar = () => {
+  }, []);
+
+  //hàm chọn view được truyền từ dialog chọn view
+  const CloseDialogChossView = useCallback(() =>{
+    setIsOpenDialogViews(false);
+  })
+  //Hàm đóng view điền thông tin booking
+  const CloseDialogFillIC = useCallback(() => {
+    setIsOpenDialogFill(false);
+  }, []);
+  //hàm mở dialog chọn ngày
+  const OpenDialogCalendar = useCallback(() => {
+    setIsOpenDialog(true);
+  }, []);
+
+  //hàm chuyển từ dialog chọn ngày - > chọn view
+  const CloseDialogCalendar = useCallback(() => {
     setIsOpenDialog(false);
     setIsOpenDialogViews(true);
-  };
-   
-  const CloseDialogViews = () =>{
+  }, []);
+
+  // hàm chuyển từ dialog view -> điền thông tin
+  const CloseDialogViews = useCallback(() => {
     setIsOpenDialogViews(false);
     setIsOpenDialogFill(true);
-  }
+  }, []);
 
-  const CloseDialogFill = () =>{
+  // Đóng thông tin khách hàng và gửi request
+  const CloseDialogFill = useCallback(() => {
     setIsOpenDialogFill(false);
-    swal("Good job!","Thank you for your interest in our service. We will respond to you as quickly as possible via email.", "success");
-  }
+  }, []);
 
+  //lấy danh sách bàn theo view
   useEffect(() => {
-    if (index >= text.length) return; // không load lại nếu đã hết nội dung
+    const getView = async () => {
+      const url = `${API_URL}category/getViews/${id}`;
+      try {
+        const res = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "ngrok-skip-browser-warning": true,
+          },
+        });
+        if (!res.ok) {
+          throw new Error(`Fetch data error: ${res.status}`);
+        }
+        const json = await res.json();
+        setDataView(json.data);
+      } catch (error) {
+        console.error(error.message);
+      }
+    };
+    getView();
+  }, [id]);
 
-    const interval = setInterval(() => {
-      setDisplayedText(text.slice(0, index + 1)); // Hiển thị từng chữ cái
-      setIndex((prevIndex) => prevIndex + 1); // cập nhật chỉ dố từ
-    }, 20); // Tốc độ hiển thị
-
-    return () => clearInterval(interval);
-  }, [index, text]);
   return (
     <div className="container_content_description_view">
-      <p className="title_content_view">Ocean Breeze Table</p>
-      <div className="container_description_content_view">
-        <p className="description_content_view">{displayedText}</p>
-      </div>
-      <p className="text_for_require">For all enquiries, please email</p>
-      <p className="text_email">info@oceanbreezerestaurant.com</p>
-      <div className="container_image_view">
-        <img className="image_view" alt="image view" src={imgView} />
-      </div>
-      <div className="container_btn_ic">
-        <button className="button_booking_view_more" onClick={OpenDialogCalendar}>
-          Book Now
-        </button>
-        <img src={icArrRight} alt="icon arrow" />
-      </div>
-      <DialogCalendar isOpen={isOpenDialog} onClose={CloseDialogCalendar} title="Restaurant Experience">
-        <p>All payments for tickets purchased are fixed and final. The Restaurant Experience has a policy of no refunds and cancellations.</p>
+      {dataView ? (
+        <>
+          <p className="title_content_view">{name}</p>
+          <div className="container_description_content_view">
+            <p className="description_content_view_more">{description}</p>
+          </div>
+          <p className="text_for_require">For all enquiries, please email</p>
+          <p className="text_email">info@groupsixrestaurant.com</p>
+          <div className="container_btn_ic">
+            <button
+              className="button_booking_view_more"
+              onClick={OpenDialogCalendar}
+            >
+              Book Now
+            </button>
+          </div>
+        </>
+      ) : (
+        <div>Loading...</div>
+      )}
+      <DialogCalendar
+        isOpen={isOpenDialog} // mở dialog
+        onClose={CloseDialogCalendar}// đóng dialog
+        title="Restaurant Experience" // tile dialog 
+        onListViewAvailable={handleListViewAvailable} // danh sách bàn có sẵn cho từng view theo ngày
+        onDateSelect={handleDateSelect} // truyền ngày được chọn cho contentdescription view
+        id={id} // truyền id view cho dialog
+      >
+        <p>
+          All payments for tickets purchased are fixed and final. The Restaurant
+          Experience has a policy of no refunds and cancellations.
+        </p>
       </DialogCalendar>
       <DialogChooseView
         isOpen={isOpenDialogViews}
         onClose={CloseDialogViews}
         title={"Choose View"}
+        listViewAvailable={listViewAvailable} // danh sách bàn có sẵn cho từng view theo ngày
+        backDialog={backDialogView} // hàm cho chuyển từ dilaog view -> chọn ngày
+        onImgSelect={handleImgSelect} // chuyền id bàn được chọn
+        closeDialog={CloseDialogChossView}// đóng dialog
       ></DialogChooseView>
       <DialogFillInformation
-      isOpen={isOpenDialogFill}
-      isClose={CloseDialogFill}
-      title={"Provide Your Details"}
-      >
-      </DialogFillInformation>
+        isOpen={isOpenDialogFill} // mở dialog
+        isClose={CloseDialogFill} // đóng dialog
+        title={"Provide Your Details"} // title
+        closeDialog={CloseDialogFillIC} // hàm cho icon đóng dialog
+        idCategorySelected={selectedImg} // id bàn được chon
+        dateSelected={selectedDate}// id ngày được chọn
+      ></DialogFillInformation>
     </div>
   );
 }
+
+ContentDescriptionView.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+}; //truyền dữ liệu sang diff component cho dialog
 
 export default ContentDescriptionView;

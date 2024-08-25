@@ -19,6 +19,15 @@ const DialogChooseView = ({
   // sử dụng swiperRef để lưu trữ index swiper để chắc chắn rằng kh cần re-render lại khi thay đổi index swiper 
   const swiperRef = useRef(null);
 
+  const resertIndexSwiperWhenBack = () => {
+    setCurrentIndex(0);
+    backDialog();
+  }
+  const resertIndexSwiperWhenClose = () => {
+    setCurrentIndex(0);
+    closeDialog();
+  }
+
   //vị trí của swiper 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -45,10 +54,10 @@ const DialogChooseView = ({
     <div className="dialog-overlay">
       <div className="dialog">
         <div className="container_header_dialog">
-          <button onClick={backDialog}>
+          <button onClick={resertIndexSwiperWhenBack}>
             <img src={ic_arr_left_transition_swiper} alt="icon" />
           </button>
-          <button onClick={closeDialog}>
+          <button onClick={resertIndexSwiperWhenClose}>
             <img src={ic_close_dialog} alt="icon" />
           </button>
         </div>

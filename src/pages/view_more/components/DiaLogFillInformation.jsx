@@ -64,6 +64,15 @@ const DialogFillInformation = ({
   };
 
   const handleBooking = () => {
+    console.log({
+      name: name,
+      phone: phone,
+      email: email,
+      addition_note: additionNote,
+      numberPerson: numberPerson,
+      view_id: idCategorySelected,
+      booking_date: dateSelected.toISOString(),
+    })
     if (!validateForm()) return;
       fetch(`${API_URL}booking/add-booking`, {
       method: "POST",
@@ -92,7 +101,7 @@ const DialogFillInformation = ({
         setPhone(""),
         setEmail(""),
         setAdditionNote(""),
-        setNumberPerson(1)
+        setNumberPerson(1),
         swal(
           "Good job!",
           "Thank you for your interest in our service. We will respond to you as quickly as possible via email.",

@@ -12,7 +12,7 @@ function ContentDescriptionView({ id, name, description }) {
   const [isOpenDialogFill, setIsOpenDialogFill] = useState(false); // set trạng thái cho dialog điền thông tin
   const [dataView, setDataView] = useState({}); // danh sách các view trong theo loại
   const [listViewAvailable, setListViewAvailable] = useState([]); // danh sách các view trong được call API theo ngày 
-  const [selectedDate, setSelectedDate] = useState(null); // ngày chọn booking
+  const [selectedDate, setSelectedDate] = useState(new Date()); // ngày chọn booking
   const [selectedImg, setSelectedImg] = useState(null); // view chọn booking
 
   // hàm chọn ngày
@@ -139,7 +139,7 @@ function ContentDescriptionView({ id, name, description }) {
         isClose={CloseDialogFill} // đóng dialog
         title={"Provide Your Details"} // title
         closeDialog={CloseDialogFillIC} // hàm cho icon đóng dialog
-        idCategorySelected={selectedImg} // id bàn được chon
+        idCategorySelected={String(selectedImg)} // id bàn được chon
         dateSelected={selectedDate}// id ngày được chọn
       ></DialogFillInformation>
     </div>

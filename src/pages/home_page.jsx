@@ -50,7 +50,7 @@ function HomePage() {
             return index % 2 === 0 ? (
               <CardViewRight
                 key={category.id}
-                id={category.id}
+                id={String(category.id)}
                 name={category.name}
                 description={category.description}
                 imageSrc={view1}
@@ -58,7 +58,7 @@ function HomePage() {
             ) : (
               <CardViewLeft
                 key={category.id}
-                id={category.id}
+                id={String(category.id)}
                 name={category.name}
                 description={category.description}
                 imageSrc={view2}

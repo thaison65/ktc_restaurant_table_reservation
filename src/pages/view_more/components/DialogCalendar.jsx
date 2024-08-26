@@ -42,7 +42,7 @@ const DialogCalendar = ({
     } catch (error) {
       console.error("Lỗi API danh sách bàn trống theo ngày và loại view", error.message);
     }
-  }, []);
+  }, [selectedDate]);
 
   // hàm thay đổi ngày trong dialog
   const handleDateChange = useCallback(

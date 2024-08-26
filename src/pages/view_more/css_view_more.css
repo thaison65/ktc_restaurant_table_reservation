@@ -468,6 +468,7 @@ height: 100px;
   height: 600px;
   display: flex;
   justify-content: center;
+  text-align: center;
   align-items: center;
   font-size: 24px;
   font-family: "Rochester", cursive;

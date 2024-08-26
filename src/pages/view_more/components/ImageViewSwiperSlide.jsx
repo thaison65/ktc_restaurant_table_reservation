@@ -12,7 +12,6 @@ export default function ImageViewSwiper({ id }) {
   useEffect(() => {
     const getView = async () => {
       const url = `${API_URL}category/getViews/${id}`;
-      console.log(id);
       try {
         const res = await fetch(url, {
           method: "GET",
@@ -22,13 +21,14 @@ export default function ImageViewSwiper({ id }) {
           },
         });
         if (!res.ok) {
-          throw new Error(`Lỗi fetch API danh sách bàn theo view: ${res.status}`);
+          throw new Error(
+            `Lỗi fetch API danh sách bàn theo view: ${res.status}`
+          );
         }
         const json = await res.json();
         setDataView(json.data);
-        console.log(dataView)
       } catch (error) {
-        console.error("Lỗi fecth bàn theo view",error.message);
+        console.error("Lỗi fecth bàn theo view", error.message);
       }
     };
     getView();
